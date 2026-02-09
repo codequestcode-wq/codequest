@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dedektif Selim: Gölgelerin İçinde</title>
+    <style>
+        /* --- ATMOSFERİK TASARIM --- */
+        :root {
+            --bg-color: #0d0d0d;
+            --panel-bg: #1a1a1a;
+            --accent: #00ff9d;
+            --accent-dim: rgba(0, 255, 157, 0.1);
+            --danger: #ff4444;
+            --text-main: #e0e0e0;
+            --text-dim: #888;
+        }
+
+        body { 
+            background: var(--bg-color); 
+            color: var(--text-main); 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 20px; 
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+        }
+
+        h2 { 
+            text-transform: uppercase; 
+            letter-spacing: 3px; 
+            border-bottom: 2px solid var(--accent); 
+            padding-bottom: 10px;
+            text-shadow: 0 0 15px var(--accent);
+        }
+
+        #main-wrapper { 
+            display: flex; 
+            gap: 20px; 
+            max-width: 1400px; 
+            width: 95%; 
+            height: 85vh; 
+        }
+
+        /* --- OYUN ALANI (SOL) --- */
+        #game-container { 
+            flex: 2.5; 
+            display: flex; 
+            flex-direction: column; 
+            background: var(--panel-bg); 
+            border: 1px solid #333; 
+            border-radius: 8px; 
+            padding: 20px; 
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        /* İstatistik Barı */
+        #stats-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #111;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #333;
+        }
+        .stat-box { font-weight: bold; font-family: monospace; font-size: 1.1em; }
+        .stat-danger { color: var(--danger); animation: pulse 1s infinite; }
+
+        /* Sohbet Ekranı */
+        #dialogue-box { 
+            flex-grow: 1; 
+            overflow-y: auto; 
+            padding: 15px; 
+            margin-bottom: 15px; 
+            background: #000; 
+            border: 1px solid #333; 
+            border-radius: 4px; 
+            font-family: 'Consolas', monospace; 
+            line-height: 1.5;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .msg { margin: 8px 0; padding: 8px 12px; border-radius: 4px; max-width: 85%; animation: fadeIn 0.3s ease; }
+        .msg-system { color: #f1c40f; border-left: 3px solid #f1c40f; background: rgba(241, 196, 15, 0.1); width: 100%; }
+        .msg-hero { color: #ccc; align-self: flex-end; text-align: right; border-right: 3px solid #3498db; background: rgba(52, 152, 219, 0.1); margin-left: auto; }
+        .msg-suspect { color: var(--accent); border-left: 3px solid var(--accent); background: var(--accent-dim); }
+        .msg-accuse { color: var(--danger); text-align: center; font-weight: bold; border: 1px solid var(--danger); width: 100%; }
+
+        /* Karakterler */
+        .suspect-list { display: flex; gap: 10px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px; }
+        .suspect { 
+            flex: 1; 
+            text-align: center; 
+            background: #222; 
+            padding: 10px; 
+            border: 1px solid #444; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            min-width: 100px;
+            position: relative;
+        }
+        .suspect:hover { background: #333; border-color: var(--accent); }
+        .suspect.active { background: var(--accent-dim); border-color: var(--accent); box-shadow: 0 0 10px var(--accent-dim); }
+        .suspect-stress-bar { height: 4px; background: #333; margin-top: 5px; border-radius: 2px; overflow: hidden; }
+        .stress-fill { height: 100%; background: var(--danger); width: 0%; transition: width 0.5s; }
+
+        /* Kontroller */
+        .input-area { display: flex; gap: 10px; }
+        input { 
+            flex-grow: 1; padding: 12px; background: #111; border: 1px solid #444; color: white; 
+            font-family: monospace; font-size: 1.1em; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: var(--accent); }
+        button { 
+            padding: 10px 20px; cursor: pointer; border: none; font-weight: bold; text-transform: uppercase; 
+            background: #333; color: white; transition: 0.3s; 
+        }
+        .btn-ask:hover { background: var(--accent); color: black; }
+        .btn-action { width: 100%; margin-top: 5px; background: #444; }
+        .btn-action:hover { background: #666; }
+        .btn-arrest { background: #5a1a1a; color: #ff9999; margin-top: 10px; }
+        .btn-arrest:hover { background: var(--danger); color: white; }
+
+        /* --- SAĞ PANEL (NOT DEFTERİ & ENVANTER) --- */
+        #notebook-panel { 
+            flex: 1; 
+            background: #e6dac3; 
+            color: #3e2723; 
+            padding: 20px; 
+            border-radius: 4px; 
+            font-family: 'Courier New', Courier, monospace; 
+            border-left: 10px solid #5d4037; 
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: 5px 5px 15px black;
+            overflow-y: auto;
+        }
+        
+        .notebook-section h3 { border-bottom: 2px solid #5d4037; margin-bottom: 10px; }
+        .inventory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+        .inv-item { background: rgba(0,0,0,0.1); padding: 10px; text-align: center; border-radius: 4px; font-size: 1.5em; cursor: help; }
+        .note-entry { font-size: 0.9em; margin-bottom: 8px; border-bottom: 1px dashed #999; padding-bottom: 2px; }
+
+        /* Animasyonlar */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        @keyframes shake { 0% { transform: translate(1px, 1px); } 10% { transform: translate(-1px, -2px); } 20% { transform: translate(-3px, 0px); } 30% { transform: translate(3px, 2px); } 40% { transform: translate(1px, -1px); } 50% { transform: translate(-1px, 2px); } 60% { transform: translate(-3px, 1px); } 70% { transform: translate(3px, 1px); } 80% { transform: translate(-1px, -1px); } 90% { transform: translate(1px, 2px); } 100% { transform: translate(1px, -2px); } }
+        
+        .shaking { animation: shake 0.5s; }
+        .red-alert { border: 2px solid red !important; box-shadow: 0 0 20px red; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; }
+        
+        #exit-btn {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: rgba(255, 68, 68, 0.2);
+        color: #ff4444;
+        border: 1px solid #ff4444;
+        padding: 5px 15px;
+        font-size: 0.8em;
+        cursor: pointer;
+        z-index: 1000;
+        transition: 0.3s;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    #exit-btn:hover {
+        background: var(--danger);
+        color: white;
+        box-shadow: 0 0 10px var(--danger);
+    }
+    </style>
+</head>
+<body>
+    <a href="index.html" id="exit-btn">
+        <span>⬅</span> ÇIKIŞ (Vazgeç)
+    </a>
+    <h2>🕵️‍♂️ Dedektif Selim: Müze Vakası v2.0</h2>
+
+    <div id="main-wrapper">
+        <div id="game-container">
+            <div id="stats-bar">
+                <span class="stat-box" id="mental-stat" style="color:#3498db">🧠 Akıl: 100</span>
+                <span class="stat-box" id="time-stat" style="color:#f1c40f">⏳ Hamle: 0</span>
+                <span class="stat-box" id="evidence-stat" style="color:#e74c3c">🔍 Kanıt: 0/4</span>
+            </div>
+
+            <div id="dialogue-box">
+                <div class="msg msg-system">
+                    MERKEZ: Selim, müzede büyük bir hırsızlık oldu. İçeride 5 şüpheli var.<br>
+                    Dikkatli ol, birbirleri hakkında konuşmalarını sağla. İsim vererek çapraz sorgu yapabilirsin.<br>
+                    <strong>Örnek: "Leyla hakkında ne düşünüyorsun?"</strong>
+                </div>
+            </div>
+
+            <div class="suspect-list">
+                </div>
+
+            <div class="input-area">
+                <input type="text" id="userInput" placeholder="Soru sor... (Örn: Neredeydin?, Arda kim?, Neden yaptın?)" onkeypress="handleEnter(event)">
+                <button class="btn-ask" onclick="askQuestion()">SOR</button>
+            </div>
+
+            <div style="margin-top: 10px; display:flex; gap:10px;">
+                <button class="btn-action" onclick="searchRoom()">🔍 Etrafı Ara (-10 Akıl)</button>
+                <button class="btn-action" onclick="analyzeClues()">🔬 Laboratuvar Analizi (-20 Akıl)</button>
+            </div>
+            
+            <button id="arrestBtn" class="btn-action btn-arrest" onclick="toggleArrestMode()">🚨 TUTUKLAMA BAŞLAT 🚨</button>
+            
+            <div id="arrest-overlay" style="display:none; text-align:center; padding:10px; background:#2a0a0a; margin-top:10px; border:1px solid red;">
+                <h3 style="color:red; margin:5px;">⚠️ KİMİ TUTUKLUYORSUN? ⚠️</h3>
+                <p style="font-size:0.8em; color:#aaa;">Dikkat: Yanlış tutuklama mesleğini bitirir.</p>
+                <div id="arrest-buttons" style="display:flex; gap:5px; justify-content:center; flex-wrap:wrap;"></div>
+                <button class="btn-action" onclick="toggleArrestMode()" style="background:#444; width:50%; margin:auto; margin-top:5px;">İPTAL</button>
+            </div>
+        </div>
+
+        <div id="notebook-panel">
+            <div class="notebook-section">
+                <h3>🎒 Kanıt Çantası</h3>
+                <div class="inventory-grid" id="inventory">
+                    </div>
+                <div id="inventory-text" style="font-size:0.8em; color:#5d4037; margin-top:5px; font-style:italic;"></div>
+            </div>
+
+            <div class="notebook-section">
+                <h3>📝 Dedektif Notları</h3>
+                <div id="notes-container">
+                    <div class="note-entry">- Soruşturma başladı.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- OYUN KONFIGÜRASYONU ---
+        let mentalHealth = 100;
+        let turnCount = 0;
+        let evidenceFound = [];
+        let currentSuspect = null;
+        let gameActive = true;
+        let guiltyPerson = ""; 
+        
+        // --- KARAKTER VERİTABANI (ÇAPRAZ SORGU SİSTEMİ EKLENDİ) ---
+        const suspectsData = {
+            "Leyla": {
+                role: "Küratör",
+                stress: 0,
+                responses: {
+                    default: "Müze benim her şeyim, bu felaket beni mahvetti.",
+                    alibi: "Ofisimde envanter kontrolü yapıyordum. Kameralar bozukmuş, ne tesadüf!",
+                    motive: "Borçlarım olabilir ama hırsız değilim. Bu koleksiyon hayatım.",
+                    opinions: { // Çapraz Sorgu Verileri
+                        "Kerem": "O bekçiden hiç hoşlanmıyorum. Sürekli beni izliyor. Eski bir polismiş, neden atıldı acaba?",
+                        "Dalton": "Kibirli zenginin teki. Parasıyla her şeyi satın alabileceğini sanıyor.",
+                        "Sofia": "Zavallı kadın, çok sessiz. Bazen varlığını bile unutuyorum.",
+                        "Arda": "Çok yetenekli ama tehlikeli bir egosu var. Sahte eserler konusunda çok bilgili..."
+                    }
+                }
+            },
+            "Kerem": {
+                role: "Güvenlik",
+                stress: 0,
+                responses: {
+                    default: "Ben sadece işimi yapıyorum amirim. Sorun çıkarmayın.",
+                    alibi: "Arka bahçede devriyedeydim. Çamurlu ayak izleri benim olabilir, hava yağmurluydu.",
+                    motive: "Polislikten atıldım diye hırsız olacak değilim. Onurumu satmadım.",
+                    opinions: {
+                        "Leyla": "Kadın çok gergin. Sürekli telefonla gizli gizli konuşurken görüyorum.",
+                        "Dalton": "O adamı sevmem. Bize böcek gibi bakıyor. Bir dersi hak ediyor.",
+                        "Sofia": "Sofia iyidir, zararsızdır. Onu karıştırmayın.",
+                        "Arda": "Laboratuvarından garip kimyasal kokuları geliyor. Ne pişiriyor orada?"
+                    }
+                }
+            },
+            "Dalton": {
+                role: "Koleksiyoner",
+                stress: 0,
+                responses: {
+                    default: "Vaktim nakittir dedektif. Sorunuzu çabuk sorun.",
+                    alibi: "VIP salonda şampanyamı yudumluyordum. Garson şahidimdir.",
+                    motive: "Benim servetim bu müzeyi on kere satın alır. Çalmama gerek yok.",
+                    opinions: {
+                        "Leyla": "Yeteneksiz bir yönetici. Müze batmak üzere, o yüzden panik halinde.",
+                        "Kerem": "Kaba saba bir adam. Bir hırsız tipi var onda.",
+                        "Sofia": "Temizlikçi mi? Adını bile bilmiyorum.",
+                        "Arda": "O çocukta iş var. Sanattan anlıyor. Belki ona iş teklif ederim."
+                    }
+                }
+            },
+            "Sofia": {
+                role: "Temizlikçi",
+                stress: 0,
+                responses: {
+                    default: "B-ben bir şey görmedim efendim, yemin ederim.",
+                    alibi: "Havalandırma boşluklarını siliyordum. Biraz gürültü duydum ama korktum.",
+                    motive: "Annem hasta... Çok paraya ihtiyacımız var ama haram yemem.",
+                    opinions: {
+                        "Leyla": "Bayan Leyla bana hep iyi davranır ama dün gece ağlıyordu.",
+                        "Kerem": "Kerem bey beni korur. O iyi biridir.",
+                        "Dalton": "O beyefendiden korkuyorum. Bana bağırıp duruyor.",
+                        "Arda": "Doktor bey bazen gece yarıları gizlice müzeye geliyor..."
+                    }
+                }
+            },
+            "Arda": {
+                role: "Restoratör",
+                stress: 0,
+                responses: {
+                    default: "Lütfen dikkatli olun, buradaki toz bile tarihidir.",
+                    alibi: "Laboratuvarda bir heykelin restorasyonuyla uğraşıyordum. Ellerim hala alçı.",
+                    motive: "Ben sanatı korurum, çalmam. Bilim insanıyım ben.",
+                    opinions: {
+                        "Leyla": "Sanattan anlamaz, sadece paradan anlar. Sigorta işleriyle çok ilgili.",
+                        "Kerem": "Çok kaba. Sanat eserlerine dokunmaması gerektiğini öğrenemedi.",
+                        "Dalton": "Zevksiz bir zengin. Sadece gösteriş peşinde.",
+                        "Sofia": "Temizlik yaparken çok ses çıkarıyor, konsantrasyonumu bozuyor."
+                    }
+                }
+            }
+        };
+
+        // Potansiyel kanıtlar ve ikonları
+        const potentialEvidence = [
+            { id: "eldiven", text: "Yırtık bir deri eldiven parçası.", icon: "🧤", owner: "Dalton" },
+            { id: "vida", text: "Havalandırmadan düşmüş bir tornavida.", icon: "🔧", owner: "Sofia" },
+            { id: "toz", text: "Kasanın üzerinde beyaz alçı tozu.", icon: "🌫️", owner: "Arda" },
+            { id: "belge", text: "Yüksek miktarlı bir borç senedi.", icon: "📄", owner: "Leyla" },
+            { id: "çamur", text: "Kasa önünde taze çamurlu bot izi.", icon: "🥾", owner: "Kerem" }
+        ];
+
+        // --- BAŞLANGIÇ AYARLARI ---
+        function initGame() {
+            // Rastgele Suçlu Seç
+            const keys = Object.keys(suspectsData);
+            guiltyPerson = keys[Math.floor(Math.random() * keys.length)];
+            console.log("Debug: Suçlu " + guiltyPerson); // Hile için konsola bakabilirsin :)
+
+            renderSuspects();
+            writeSystem("Dedektif, sahne senin. Şüphelilere tıkla ve sorular sor.");
+        }
+
+        function renderSuspects() {
+            const list = document.querySelector('.suspect-list');
+            const arrestDiv = document.getElementById('arrest-buttons');
+            list.innerHTML = '';
+            arrestDiv.innerHTML = '';
+
+            Object.keys(suspectsData).forEach(name => {
+                // Şüpheli kartı oluştur
+                let div = document.createElement('div');
+                div.className = 'suspect';
+                div.id = 'card-' + name;
+                div.innerHTML = `
+                    <div style="font-size:1.5em">👤</div>
+                    <strong>${name}</strong><br>
+                    <small>${suspectsData[name].role}</small>
+                    <div class="suspect-stress-bar"><div class="stress-fill" id="stress-${name}"></div></div>
+                `;
+                div.onclick = () => selectSuspect(name);
+                list.appendChild(div);
+
+                // Tutuklama butonu oluştur
+                let btn = document.createElement('button');
+                btn.className = 'btn-ask'; // Stil ödünç al
+                btn.style.background = '#330000';
+                btn.innerText = name;
+                btn.onclick = () => finalizeArrest(name);
+                arrestDiv.appendChild(btn);
+            });
+        }
+
+        function selectSuspect(name) {
+            if (!gameActive) return;
+            currentSuspect = name;
+            
+            // Görsel güncelleme
+            document.querySelectorAll('.suspect').forEach(el => el.classList.remove('active'));
+            document.getElementById('card-' + name).classList.add('active');
+            
+            writeSystem(`${name} sana bakıyor. Ne soracaksın?`);
+        }
+
+        // --- SORGULAMA MOTORU (AI PARSER) ---
+        function askQuestion() {
+            if (!gameActive) return;
+            if (!currentSuspect) {
+                alert("Önce bir şüpheli seçmelisin!");
+                return;
+            }
+
+            const inputEl = document.getElementById('userInput');
+            const text = inputEl.value.trim().toLowerCase();
+            if (!text) return;
+
+            writeDialogue("Sen", inputEl.value, "msg-hero");
+            inputEl.value = "";
+            
+            turnCount++;
+            document.getElementById('time-stat').innerText = "⏳ Hamle: " + turnCount;
+
+            processAnswer(currentSuspect, text);
+        }
+
+        function processAnswer(suspectName, question) {
+            const person = suspectsData[suspectName];
+            let response = "";
+            let stressIncrease = 0;
+
+            // 1. ÇAPRAZ SORGU KONTROLÜ (En önemli yenilik)
+            // Sorulan cümlenin içinde başka bir şüphelinin adı geçiyor mu?
+            let mentionedSuspect = Object.keys(suspectsData).find(otherName => 
+                question.includes(otherName.toLowerCase())
+            );
+
+            // Eğer kendi adını sorarsa
+            if (mentionedSuspect === suspectName) {
+                response = "Benim hakkımda ne mi düşünüyorum? Ben masumum!";
+                stressIncrease = 5;
+            }
+            // Başkası hakkında sorarsa
+            else if (mentionedSuspect) {
+                response = `[${mentionedSuspect} Hakkında]: ` + person.responses.opinions[mentionedSuspect];
+            }
+            // 2. KELİME ANAHTARLARI
+            else if (question.includes("nerde") || question.includes("nerede") || question.includes("konum") || question.includes("zaman")) {
+                // Eğer suçluysa yalan söyler (basit mantık)
+                if (suspectName === guiltyPerson && Math.random() > 0.5) {
+                    response = "Şey... Tuvaletteydim. Hayır, bekle, telefonla konuşuyordum.";
+                    stressIncrease = 15; // Yalan söylerken gerilir
+                } else {
+                    response = person.responses.alibi;
+                }
+            }
+            else if (question.includes("neden") || question.includes("sebep") || question.includes("para") || question.includes("borç")) {
+                response = person.responses.motive;
+                stressIncrease = 5;
+            }
+            else if (question.includes("polis") || question.includes("hapis") || question.includes("itiraf")) {
+                response = "Beni korkutamazsın dedektif!";
+                stressIncrease = 10;
+            }
+            else {
+                response = person.responses.default;
+                response += " (Anlamadım, daha açık konuş.)";
+            }
+
+            // Stres Yönetimi
+            person.stress += stressIncrease;
+            updateStressVisual(suspectName, person.stress);
+
+            // Çok stresliyse konuşmaz
+            if (person.stress >= 100) {
+                response = "BUNALDIM! ARTIK TEK KELİME ETMEYECEĞİM!";
+                response = response.toUpperCase();
+            }
+
+            // Gecikmeli cevap
+            setTimeout(() => {
+                writeDialogue(suspectName, response, "msg-suspect");
+                // Akıl sağlığı cezası (her soruda az da olsa yorulursun)
+                updateMental(-2);
+            }, 600);
+        }
+
+        function handleEnter(e) {
+            if (e.key === 'Enter') askQuestion();
+        }
+
+        // --- AKSİYONLAR ---
+        function searchRoom() {
+            if(!gameActive) return;
+            if (mentalHealth < 10) {
+                writeSystem("Çok yorgunsun, arama yapamazsın.");
+                return;
+            }
+
+            updateMental(-10);
+            writeSystem("Etrafı didik didik arıyorsun...");
+
+            setTimeout(() => {
+                // Rastgele bir kanıt bulma şansı
+                // Kanıt sistemi: Suçluya ait kanıtı bulma şansın daha yüksek olsun
+                let foundItem = null;
+                
+                // %40 şansla suçlunun kanıtı, %30 rastgele, %30 boş
+                const rand = Math.random();
+                if (rand < 0.4) {
+                    // Suçlunun kanıtını bul
+                    foundItem = potentialEvidence.find(e => e.owner === guiltyPerson);
+                } else if (rand < 0.7) {
+                    // Rastgele bir kanıt bul
+                    foundItem = potentialEvidence[Math.floor(Math.random() * potentialEvidence.length)];
+                }
+
+                if (foundItem && !evidenceFound.includes(foundItem.id)) {
+                    evidenceFound.push(foundItem.id);
+                    addInventoryItem(foundItem);
+                    writeSystem(`BİR ŞEY BULDUN: ${foundItem.text}`);
+                    document.getElementById('evidence-stat').innerText = `🔍 Kanıt: ${evidenceFound.length}/4`;
+                } else {
+                    writeSystem("Hiçbir şey bulamadın. Sadece toz.");
+                }
+            }, 1000);
+        }
+
+        function analyzeClues() {
+            if (evidenceFound.length === 0) {
+                alert("Analiz edilecek kanıtın yok!");
+                return;
+            }
+            updateMental(-20);
+            writeSystem("Laboratuvar sonuçları bekleniyor...");
+            
+            setTimeout(() => {
+                // Basit bir ipucu ver
+                const clues = [
+                    "Bulunan parmak izleri " + guiltyPerson + " ile kısmen uyuşuyor.",
+                    "Suç saati sırasında " + guiltyPerson + " güvenlik kameralarında görünmüyor.",
+                    "Olay yerinde bulunan DNA örneği belirsiz ama şüpheli."
+                ];
+                writeNote(clues[Math.floor(Math.random() * clues.length)]);
+            }, 1500);
+        }
+
+        // --- UI GÜNCELLEMELERİ ---
+        function writeDialogue(who, text, cssClass) {
+            const box = document.getElementById('dialogue-box');
+            box.innerHTML += `<div class="msg ${cssClass}"><strong>${who}:</strong> ${text}</div>`;
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function writeSystem(text) {
+            const box = document.getElementById('dialogue-box');
+            box.innerHTML += `<div class="msg msg-system">${text}</div>`;
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function writeNote(text) {
+            const container = document.getElementById('notes-container');
+            container.innerHTML += `<div class="note-entry">➤ ${text}</div>`;
+            // Not defterine scroll
+            const panel = document.getElementById('notebook-panel');
+            panel.scrollTop = panel.scrollHeight;
+        }
+
+        function addInventoryItem(item) {
+            const grid = document.getElementById('inventory');
+            const div = document.createElement('div');
+            div.className = 'inv-item';
+            div.innerText = item.icon;
+            div.title = item.text;
+            div.onclick = () => {
+                document.getElementById('inventory-text').innerText = item.text + " (" + item.owner + "?)";
+            };
+            grid.appendChild(div);
+            
+            // Kanıtı nota da ekle
+            writeNote(`KANIT: ${item.text}`);
+        }
+
+        function updateMental(amount) {
+            mentalHealth += amount;
+            if (mentalHealth > 100) mentalHealth = 100;
+            const el = document.getElementById('mental-stat');
+            el.innerText = `🧠 Akıl: ${mentalHealth}`;
+            
+            // Görsel efekt
+            document.body.classList.add('shaking');
+            setTimeout(() => document.body.classList.remove('shaking'), 500);
+
+            if (mentalHealth <= 0) {
+                gameOver("Akıl sağlığını yitirdin. Şüpheliler seni manipüle etti ve dava kapandı.");
+            }
+        }
+
+        function updateStressVisual(name, value) {
+            const bar = document.getElementById(`stress-${name}`);
+            if (bar) {
+                bar.style.width = value + "%";
+            }
+        }
+
+        // --- TUTUKLAMA VE SONUÇ ---
+        function toggleArrestMode() {
+            const overlay = document.getElementById('arrest-overlay');
+            if (overlay.style.display === 'none') {
+                overlay.style.display = 'block';
+                document.body.classList.add('red-alert');
+            } else {
+                overlay.style.display = 'none';
+                document.body.classList.remove('red-alert');
+            }
+        }
+
+        function finalizeArrest(name) {
+            gameActive = false;
+            document.getElementById('arrest-overlay').style.display = 'none';
+            document.body.classList.remove('red-alert');
+
+            let message = "";
+            let color = "";
+
+            if (name === guiltyPerson) {
+                color = "#00ff9d";
+                message = `
+                    <h1 style="color:${color}">BAŞARILI!</h1>
+                    <p>Mücevher hırsızı <strong>${name}</strong> yakalandı.</p>
+                    <p>Bulunan kanıtlar ve çapraz sorgu taktiklerin işe yaradı.</p>
+                    <p>Terfi aldın Dedektif!</p>
+                `;
+            } else {
+                color = "#ff4444";
+                message = `
+                    <h1 style="color:${color}">YANLIŞ KARAR!</h1>
+                    <p>Masum olan <strong>${name}</strong> tutuklandı.</p>
+                    <p>Gerçek suçlu <strong>${guiltyPerson}</strong> ise bu sırada kaçtı.</p>
+                    <p>Rozetin ve silahın masaya Dedektif. Kovuldun.</p>
+                `;
+            }
+
+            document.getElementById('game-container').innerHTML = `
+                <div style="text-align:center; padding:50px;">
+                    ${message}
+                    <button class="btn-ask" onclick="location.reload()" style="margin-top:20px;">YENİ OYUN</button>
+                </div>
+            `;
+        }
+
+        function gameOver(reason) {
+            gameActive = false;
+            document.getElementById('game-container').innerHTML = `
+                <div style="text-align:center; padding:50px;">
+                    <h1 style="color:gray">OYUN BİTTİ</h1>
+                    <p>${reason}</p>
+                    <p>Gerçek Suçlu: ${guiltyPerson}</p>
+                    <button class="btn-ask" onclick="location.reload()">TEKRAR DENE</button>
+                </div>
+            `;
+        }
+
+        // Başlat
+        initGame();
+
+    </script>
+</body>
+</html>

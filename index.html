@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeQuest | Geliştirici Portfolyosu</title>
+    <title>CodeQuest | Developer Portfolio</title>
+    <meta name="description" content="CodeQuest - Yazılım geliştirici portfolyosu. JavaScript, HTML ve CSS projeleri.">
+    
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
@@ -13,20 +15,22 @@
             --card-bg: #161e2d; 
             --text: #f8fafc;
             --accent: #10b981;
+            --secondary-text: #94a3b8;
         }
 
-        * { box-sizing: border-box; }
+        /* Temel Reset */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg);
             color: var(--text);
-            margin: 0;
             line-height: 1.6;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
-        /* --- YENİ İKON VE LOGO STİLİ --- */
+        /* --- Logo & Navigasyon --- */
         .logo-wrapper {
             display: flex;
             align-items: center;
@@ -41,11 +45,10 @@
             color: var(--primary);
             font-family: 'JetBrains Mono', monospace;
             font-weight: bold;
-            padding: 5px 10px;
+            padding: 5px 12px;
             border-radius: 8px;
             font-size: 1.1rem;
             box-shadow: 0 0 10px rgba(56, 189, 248, 0.1);
-            transition: 0.3s ease;
         }
 
         .logo-text {
@@ -53,30 +56,20 @@
             font-weight: bold;
             color: var(--primary);
             letter-spacing: 1px;
-            font-size: 1.2rem;
         }
 
-        .logo-wrapper:hover .logo-icon {
-            background: var(--primary);
-            color: var(--bg);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
-            transform: translateY(-2px);
-        }
-
-        /* Navigasyon */
         nav {
             position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(11, 15, 26, 0.8);
-            backdrop-filter: blur(12px);
+            top: 0; width: 100%;
+            background: rgba(11, 15, 26, 0.85);
+            backdrop-filter: blur(15px);
             padding: 1rem 0;
             z-index: 1000;
             border-bottom: 1px solid rgba(56, 189, 248, 0.1);
         }
 
         nav .nav-content {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -85,7 +78,7 @@
         }
 
         nav .links a {
-            color: #94a3b8;
+            color: var(--secondary-text);
             text-decoration: none;
             margin-left: 25px;
             font-weight: 500;
@@ -95,141 +88,167 @@
 
         nav .links a:hover { color: var(--primary); }
 
+        /* --- Hero Section --- */
         header {
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0b0f1a 100%);
+            background: radial-gradient(circle at center, #1e293b 0%, #0b0f1a 100%);
             text-align: center;
             padding: 20px;
         }
 
         h1 {
             font-family: 'JetBrains Mono', monospace;
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-size: clamp(2.2rem, 10vw, 4.5rem);
             color: var(--primary);
-            margin: 10px 0;
+            margin: 15px 0;
             text-transform: uppercase;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
 
         .hero-sub {
-            font-size: 1.2rem;
-            color: #94a3b8;
-            max-width: 600px;
-            margin-top: 15px;
+            font-size: clamp(1rem, 4vw, 1.25rem);
+            color: var(--secondary-text);
+            max-width: 650px;
+            margin-bottom: 30px;
         }
 
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .skill-tag {
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            padding: 8px 15px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            text-align: center;
-            color: var(--primary);
-        }
-
+        /* --- Grid & Cards --- */
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 0 20px;
         }
 
-        section { padding: 80px 0; }
+        section { padding: 100px 0; }
 
         h2 { 
             font-family: 'JetBrains Mono', monospace;
             color: var(--primary); 
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             display: flex;
             align-items: center;
+            font-size: 1.8rem;
         }
 
         h2::after {
-            content: "";
-            height: 1px;
-            background: rgba(56, 189, 248, 0.2);
-            flex-grow: 1;
-            margin-left: 20px;
+            content: ""; height: 1px; background: rgba(56, 189, 248, 0.2);
+            flex-grow: 1; margin-left: 20px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .skill-tag {
+            background: rgba(56, 189, 248, 0.05);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            text-align: center;
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+            transition: 0.3s;
+        }
+
+        .skill-tag:hover {
+            background: rgba(56, 189, 248, 0.15);
+            transform: translateY(-3px);
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
         }
 
         .card {
             background: var(--card-bg);
-            padding: 30px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.03);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 35px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: relative;
+            overflow: hidden;
         }
+
+        .card::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            transform: translateX(-100%); transition: 0.5s;
+        }
+
+        .card:hover::before { transform: translateX(100%); }
 
         .card:hover {
-            transform: scale(1.02);
+            transform: translateY(-10px);
             border-color: var(--primary);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
 
-        .card h3 { margin-top: 0; color: var(--text); }
-
+        /* --- Butonlar --- */
         .btn {
             display: inline-block;
             background: var(--primary);
             color: #0b0f1a;
-            padding: 12px 24px;
-            border-radius: 6px;
+            padding: 14px 28px;
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9rem;
+            font-weight: 700;
+            font-size: 0.95rem;
             transition: 0.3s;
-            text-align: center;
+            border: none;
+            cursor: pointer;
         }
 
         .btn:hover {
-            background: #7dd3fc;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
         }
 
         .btn-outline {
             background: transparent;
-            border: 1px solid var(--primary);
+            border: 1.5px solid var(--primary);
             color: var(--primary);
         }
 
         .status {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
             color: var(--accent);
-            margin-bottom: 10px;
-            display: block;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status::before {
+            content: ""; width: 8px; height: 8px; background: var(--accent); border-radius: 50%;
         }
 
         footer { 
-            text-align: center; 
-            padding: 60px; 
-            color: #475569;
+            text-align: center; padding: 80px 20px; 
+            color: var(--secondary-text);
             border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem;
         }
 
+        @media (max-width: 768px) {
+            nav .links { display: none; } /* Mobil menü basitliği için gizlendi */
+            header { padding-top: 60px; }
+        }
     </style>
 </head>
 <body>
@@ -242,15 +261,17 @@
             </a>
             <div class="links">
                 <a href="#about">Hakkımda</a>
-                <a href="#projects">Projeler</a>
                 <a href="#skills">Yetenekler</a>
+                <a href="#projects">Projeler</a>
                 <a href="#contact">İletişim</a>
             </div>
         </div>
     </nav>
 
     <header>
-        <span style="color: var(--primary); font-family: 'JetBrains Mono'; margin-bottom: 10px;">> Hello, World!</span>
+        <div style="color: var(--primary); font-family: 'JetBrains Mono'; margin-bottom: 15px; letter-spacing: 2px;">
+            &gt; BUILD_THE_FUTURE
+        </div>
         
         <h1>
             <span style="opacity: 0.3; font-weight: normal;">&lt;</span>
@@ -258,11 +279,11 @@
             <span style="opacity: 0.3; font-weight: normal;">/&gt;</span>
         </h1>
 
-        <p class="hero-sub">Lise öğrencisi, yazılım geliştiricisi ve sürekli öğrenen bir teknoloji meraklısı.</p>
+        <p class="hero-sub">Lise öğrencisi & Full-Stack geliştirici adayı. JavaScript ekosistemiyle interaktif dijital dünyalar inşa ediyorum.</p>
         
-        <div style="margin-top: 30px;">
-            <a href="#projects" class="btn">Projelerimi Gör</a>
-            <a href="#contact" class="btn btn-outline" style="margin-left: 10px;">İletişime Geç</a>
+        <div style="display: flex; gap: 15px;">
+            <a href="#projects" class="btn">Projeleri Keşfet</a>
+            <a href="#contact" class="btn btn-outline">Kahve Ismarla</a>
         </div>
     </header>
 
@@ -270,59 +291,61 @@
         
         <section id="about">
             <h2>Hakkımda</h2>
-            <p style="font-size: 1.1rem; color: #cbd5e1;">
-                Ben, teknolojiyi sadece tüketen değil, aynı zamanda üreten tarafta olmayı hedefleyen bir geliştirici adayıyım. 
-                Lise eğitimimle eş zamanlı olarak JavaScript, HTML ve CSS teknolojileri üzerinde projeler geliştiriyorum. 
-                Problem çözmeye olan tutkumla karmaşık algoritmalar kurmayı ve interaktif kullanıcı deneyimleri tasarlamayı seviyorum.
-                Gelecekte profesyonel yazılım dünyasında kalıcı izler bırakmayı hedefliyorum.
+            <p style="font-size: 1.15rem; color: #cbd5e1; max-width: 800px;">
+                Ben, kodun bir araçtan ziyade bir sanat formu olduğuna inanan bir geliştiriciyim. 
+                Lise yıllarımdan beri <strong>JavaScript</strong> dünyasının içindeyim. 
+                Sadece çalışan değil, aynı zamanda estetik ve hızlı olan uygulamalar geliştirmeye odaklanıyorum.
             </p>
         </section>
 
         <section id="skills">
-            <h2>Teknik Yetenekler</h2>
+            <h2>Teknik Stack</h2>
             <div class="skills-grid">
-                <div class="skill-tag">HTML5</div>
-                <div class="skill-tag">CSS3 (Modern UI)</div>
-                <div class="skill-tag">JavaScript (ES6+)</div>
-                <div class="skill-tag">Oyun Algoritmaları</div>
+                <div class="skill-tag">HTML5 / Canvas</div>
+                <div class="skill-tag">CSS3 / SCSS</div>
+                <div class="skill-tag">JavaScript ES6+</div>
+                <div class="skill-tag">Game Logic</div>
                 <div class="skill-tag">Git / GitHub</div>
-                <div class="skill-tag">Web Tasarımı</div>
+                <div class="skill-tag">UI/UX Design</div>
             </div>
         </section>
 
         <section id="projects">
-            <h2>Aktif Projeler</h2>
+            <h2>Seçili Projeler</h2>
             <div class="grid">
                 <div class="card">
                     <div>
-                        <span class="status">Oyun | Yayında</span>
-                        <h3>🔍 Dedektiflik Oyunu V2.0</h3>
-                        <p style="color: #94a3b8;">Mantık ve hikaye odaklı, JavaScript tabanlı bir tarayıcı oyunu.</p>
+                        <span class="status">Live Version</span>
+                        <h3 style="margin-bottom: 10px; font-size: 1.4rem;">🔍 Dedektiflik Oyunu V2</h3>
+                        <p style="color: var(--secondary-text); margin-bottom: 20px;">Mantık hatalarını bulmaya dayalı, derin hikayeli bir tarayıcı deneyimi.</p>
                     </div>
-                    <a href="dedektif.html" class="btn">İncele & Oyna</a>
+                    <a href="dedektif.html" class="btn">Projeyi Aç</a>
                 </div>
                 
                 <div class="card">
                     <div>
-                        <span class="status" style="color: #fbbf24;">Geliştiriliyor</span>
-                        <h3>💻 Cyber-Sleuth Simülatörü</h3>
-                        <p style="color: #94a3b8;">Hacker temalı terminal simülasyonu. Terminal mantığını ve veri işlemeyi hedefleyen bir proje.</p>
+                        <span class="status" style="color: #fbbf24; opacity: 0.8;">&bull; In Progress</span>
+                        <h3 style="margin-bottom: 10px; font-size: 1.4rem;">💻 Cyber-Sleuth Sim</h3>
+                        <p style="color: var(--secondary-text); margin-bottom: 20px;">Terminal arayüzlü siber güvenlik simülasyonu ve veri analitiği modülü.</p>
                     </div>
-                    <button class="btn btn-outline" style="opacity: 0.6; cursor: not-allowed;">Çok Yakında</button>
+                    <button class="btn btn-outline" style="opacity: 0.5; cursor: not-allowed;">Geliştiriliyor</button>
                 </div>
             </div>
         </section>
 
         <section id="contact" style="text-align: center;">
-            <h2>İletişim</h2>
-            <p>Projelerim hakkında konuşmak veya iletişime geçmek için bana her zaman ulaşabilirsiniz.</p>
-            <a href="mailto:" class="btn" style="padding: 15px 50px;">Bana E-posta Gönder</a>
+            <div style="background: var(--card-bg); padding: 50px; border-radius: 20px; border: 1px solid rgba(56, 189, 248, 0.1);">
+                <h2 style="justify-content: center; margin-bottom: 20px;">Yeni Bir Görev Başlat?</h2>
+                <p style="margin-bottom: 30px; color: var(--secondary-text);">Birlikte bir proje geliştirmek veya sadece selam vermek için e-posta gönderebilirsin.</p>
+                <a href="mailto:seninmail@adresin.com" class="btn" style="padding: 16px 60px;">E-Posta Gönder</a>
+            </div>
         </section>
 
     </div>
 
     <footer>
-        <p>&copy; 2026 CodeQuest | Build with Code & Passion</p>
+        <p>Built with <strong>&lt;/&gt;</strong> by CodeQuest</p>
+        <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.5;">&copy; 2026 Tüm Hakları Saklıdır.</p>
     </footer>
 
 </body>

@@ -4,19 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeQuest | Geliştirici Portfolyosu</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #38bdf8; 
-            --bg: #0f172a;      
-            --card-bg: #1e293b; 
+            --bg: #0b0f1a;      
+            --card-bg: #161e2d; 
             --text: #f8fafc;
-            --accent: #818cf8;
+            --accent: #10b981;
         }
 
         * { box-sizing: border-box; }
 
         body {
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg);
             color: var(--text);
             margin: 0;
@@ -24,20 +26,19 @@
             scroll-behavior: smooth;
         }
 
-        /* Navigasyon */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(10px);
+            background: rgba(11, 15, 26, 0.8);
+            backdrop-filter: blur(12px);
             padding: 1rem 0;
             z-index: 1000;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.1);
         }
 
         nav .nav-content {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -45,77 +46,156 @@
             padding: 0 20px;
         }
 
+        .logo { 
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold; 
+            color: var(--primary); 
+            letter-spacing: 1px;
+            font-size: 1.2rem;
+        }
+
         nav a {
-            color: var(--text);
+            color: #94a3b8;
             text-decoration: none;
-            margin-left: 20px;
+            margin-left: 25px;
             font-weight: 500;
             transition: 0.3s;
+            font-size: 0.9rem;
         }
 
         nav a:hover { color: var(--primary); }
 
-        .logo { font-weight: bold; color: var(--primary); letter-spacing: 2px; }
-
         header {
-            height: 80vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0b0f1a 100%);
             text-align: center;
+            padding: 20px;
         }
 
         h1 {
-            font-size: clamp(3rem, 10vw, 5rem);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
             color: var(--primary);
             margin: 0;
-            text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+            text-transform: uppercase;
+        }
+
+        .hero-sub {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin-top: 15px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .skill-tag {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            text-align: center;
+            color: var(--primary);
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 40px 20px;
         }
 
-        section { padding: 60px 0; border-bottom: 1px solid #1e293b; }
+        section { padding: 80px 0; }
 
-        h2 { color: var(--primary); margin-bottom: 30px; }
+        h2 { 
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary); 
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::after {
+            content: "";
+            height: 1px;
+            background: rgba(56, 189, 248, 0.2);
+            flex-grow: 1;
+            margin-left: 20px;
+        }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
 
         .card {
             background: var(--card-bg);
-            padding: 25px;
-            border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.3s ease;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: scale(1.02);
             border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        .contact-btn {
+        .card h3 { margin-top: 0; color: var(--text); }
+
+        .btn {
             display: inline-block;
             background: var(--primary);
-            color: var(--bg);
-            padding: 12px 30px;
-            border-radius: 30px;
+            color: #0b0f1a;
+            padding: 12px 24px;
+            border-radius: 6px;
             text-decoration: none;
             font-weight: bold;
-            margin-top: 20px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            text-align: center;
         }
 
-        footer { text-align: center; padding: 40px; color: #64748b; }
+        .btn:hover {
+            background: #7dd3fc;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .status {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        footer { 
+            text-align: center; 
+            padding: 60px; 
+            color: #475569;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
 
     </style>
 </head>
@@ -123,52 +203,84 @@
 
     <nav>
         <div class="nav-content">
-            <div class="logo">CODEQUEST</div>
+            <div class="logo">./CODEQUEST</div>
             <div class="links">
                 <a href="#about">Hakkımda</a>
                 <a href="#projects">Projeler</a>
+                <a href="#skills">Yetenekler</a>
                 <a href="#contact">İletişim</a>
             </div>
         </div>
     </nav>
 
     <header>
+        <span style="color: var(--primary); font-family: 'JetBrains Mono'; margin-bottom: 10px;">> Hello, World!</span>
         <h1>CODEQUEST</h1>
-        <p style="font-size: 1.5rem; color: #94a3b8;">Level up your code, build your world.</p>
+        <p class="hero-sub">Lise öğrencisi, yazılım geliştiricisi ve sürekli öğrenen bir teknoloji meraklısı.</p>
+        
+        <div style="margin-top: 30px;">
+            <a href="#projects" class="btn">Projelerimi Gör</a>
+            <a href="#contact" class="btn btn-outline" style="margin-left: 10px;">İletişime Geç</a>
+        </div>
     </header>
 
     <div class="container">
         
         <section id="about">
-            <h2>> Hakkımda</h2>
-            <p>Ben bir lise öğrencisiyim ve bu benim dijital oyun alanım. Kodlamayı, oyun mekaniklerini çözmeyi ve yeni dünyalar inşa etmeyi seviyorum. CodeQuest, benim öğrenme yolculuğumun canlı bir kanıtı.</p>
+            <h2>Hakkımda</h2>
+            <p style="font-size: 1.1rem; color: #cbd5e1;">
+                Ben, teknolojiyi sadece tüketen değil, aynı zamanda üreten tarafta olmayı hedefleyen bir geliştirici adayıyım. 
+                Lise eğitimimle eş zamanlı olarak JavaScript, HTML ve CSS teknolojileri üzerinde projeler geliştiriyorum. 
+                Problem çözmeye olan tutkumla karmaşık algoritmalar kurmayı ve interaktif kullanıcı deneyimleri tasarlamayı seviyorum.
+                Gelecekte profesyonel yazılım dünyasında kalıcı izler bırakmayı hedefliyorum.
+            </p>
+        </section>
+
+        <section id="skills">
+            <h2>Teknik Yetenekler</h2>
+            <div class="skills-grid">
+                <div class="skill-tag">HTML5</div>
+                <div class="skill-tag">CSS3 (Modern UI)</div>
+                <div class="skill-tag">JavaScript (ES6+)</div>
+                <div class="skill-tag">Oyun Algoritmaları</div>
+                <div class="skill-tag">Git / GitHub</div>
+                <div class="skill-tag">Web Tasarımı</div>
+            </div>
         </section>
 
         <section id="projects">
-            <h2>> Projelerim</h2>
+            <h2>Aktif Projeler</h2>
             <div class="grid">
                 <div class="card">
-                    <h3>🔍 Dedektiflik Oyunu V2.0</h3>
-                    <p>Gizemli olayları çöz, ipuçlarını takip et ve suçluyu yakala! (Geliştirme aşamasında)</p>
-                    <a href="dedektif.html" class="contact-btn" style="margin-top: 15px; font-size: 0.8rem;">Hemen Oyna</a>
+                    <div>
+                        <span class="status">Oyun | Yayında</span>
+                        <h3>🔍 Dedektiflik Oyunu V2.0</h3>
+                        <p style="color: #94a3b8;">Mantık ve hikaye odaklı, JavaScript tabanlı bir tarayıcı oyunu.</p>
+                    </div>
+                    <a href="dedektif.html" class="btn">İncele & Oyna</a>
                 </div>
+                
                 <div class="card">
-                    <h3>💻 CodeQuest Web</h3>
-                    <p>Tamamen HTML/CSS kullanılarak geliştirildi. Sade, hızlı ve modern.</p>
+                    <div>
+                        <span class="status" style="color: #fbbf24;">Geliştiriliyor</span>
+                        <h3>💻 Cyber-Sleuth Simülatörü</h3>
+                        <p style="color: #94a3b8;">Hacker temalı terminal simülasyonu. Terminal mantığını ve veri işlemeyi hedefleyen bir proje.</p>
+                    </div>
+                    <button class="btn btn-outline" style="opacity: 0.6; cursor: not-allowed;">Çok Yakında</button>
                 </div>
             </div>
         </section>
 
         <section id="contact" style="text-align: center;">
-            <h2>> İletişim</h2>
-            <p>Bir projen mi var? Yoksa sadece selam mı vermek istiyorsun?</p>
-            <a href="mailto:eposta-adresin@gmail.com" class="contact-btn">Bana E-posta Gönder</a>
+            <h2>İletişim</h2>
+            <p>Projelerim hakkında konuşmak veya iletişime geçmek için bana her zaman ulaşabilirsiniz.</p>
+            <a href="mailto:senin-epostan@gmail.com" class="btn" style="padding: 15px 50px;">Bana E-posta Gönder</a>
         </section>
 
     </div>
 
     <footer>
-        <p>&copy; 2026 CodeQuest | Created with passion by a student dev.</p>
+        <p>&copy; 2026 CodeQuest | Build with Code & Passion</p>
     </footer>
 
 </body>

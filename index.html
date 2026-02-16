@@ -26,6 +26,44 @@
             scroll-behavior: smooth;
         }
 
+        /* --- YENİ İKON VE LOGO STİLİ --- */
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .logo-icon {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.1);
+            transition: 0.3s ease;
+        }
+
+        .logo-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
+            color: var(--primary);
+            letter-spacing: 1px;
+            font-size: 1.2rem;
+        }
+
+        .logo-wrapper:hover .logo-icon {
+            background: var(--primary);
+            color: var(--bg);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Navigasyon */
         nav {
             position: fixed;
             top: 0;
@@ -46,15 +84,7 @@
             padding: 0 20px;
         }
 
-        .logo { 
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: bold; 
-            color: var(--primary); 
-            letter-spacing: 1px;
-            font-size: 1.2rem;
-        }
-
-        nav a {
+        nav .links a {
             color: #94a3b8;
             text-decoration: none;
             margin-left: 25px;
@@ -63,7 +93,7 @@
             font-size: 0.9rem;
         }
 
-        nav a:hover { color: var(--primary); }
+        nav .links a:hover { color: var(--primary); }
 
         header {
             height: 100vh;
@@ -80,8 +110,11 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: clamp(2.5rem, 8vw, 4.5rem);
             color: var(--primary);
-            margin: 0;
+            margin: 10px 0;
             text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         .hero-sub {
@@ -203,7 +236,10 @@
 
     <nav>
         <div class="nav-content">
-            <div class="logo">./CODEQUEST</div>
+            <a href="#" class="logo-wrapper">
+                <div class="logo-icon">&lt;/&gt;</div>
+                <div class="logo-text">CODEQUEST</div>
+            </a>
             <div class="links">
                 <a href="#about">Hakkımda</a>
                 <a href="#projects">Projeler</a>
@@ -215,7 +251,13 @@
 
     <header>
         <span style="color: var(--primary); font-family: 'JetBrains Mono'; margin-bottom: 10px;">> Hello, World!</span>
-        <h1>CODEQUEST</h1>
+        
+        <h1>
+            <span style="opacity: 0.3; font-weight: normal;">&lt;</span>
+            CODEQUEST
+            <span style="opacity: 0.3; font-weight: normal;">/&gt;</span>
+        </h1>
+
         <p class="hero-sub">Lise öğrencisi, yazılım geliştiricisi ve sürekli öğrenen bir teknoloji meraklısı.</p>
         
         <div style="margin-top: 30px;">
@@ -274,7 +316,7 @@
         <section id="contact" style="text-align: center;">
             <h2>İletişim</h2>
             <p>Projelerim hakkında konuşmak veya iletişime geçmek için bana her zaman ulaşabilirsiniz.</p>
-            <a href="mailto:senin-epostan@gmail.com" class="btn" style="padding: 15px 50px;">Bana E-posta Gönder</a>
+            <a href="mailto:" class="btn" style="padding: 15px 50px;">Bana E-posta Gönder</a>
         </section>
 
     </div>

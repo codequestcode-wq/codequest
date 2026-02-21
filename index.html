@@ -2,9 +2,9 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AstraForge | Geliştirici Portföyü</title>
-    <meta name="description" content="AstraForge - Yazılım geliştirici portfolyosu. JavaScript, HTML, CSS ve modern web projeleri.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>NovaCore Zenith Labs | Geliştirici Portföyü</title>
+    <meta name="description" content="NovaCore Zenith Labs - Yazılım geliştirici portfolyosu. JavaScript, HTML, CSS ve modern web projeleri.">
     
     <!-- Fontlar & İkonlar -->
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
@@ -12,27 +12,24 @@
     
     <style>
         /* ---------------------------------------------
-            DEĞİŞKENLER & RESET (YENİ RENK PALETİ)
+            DEĞİŞKENLER - NOVACORE ZENITH LABS TEMASI
+            (Koyu Uzay Mavisi + Platin Beyaz + Neon Kırmızısı Vurgu)
         --------------------------------------------- */
         :root {
-            --primary: #2dd4bf;        /* Turkuaz - daha canlı */
-            --primary-glow: 0 0 20px rgba(45, 212, 191, 0.3);
-            --bg: #0b0e1a;              /* ana arka plan */
-            --bg-gradient: radial-gradient(circle at 30% 10%, #1a1f30, #05070c);
-            --card-bg: rgba(22, 30, 45, 0.6);
-            --card-border: rgba(45, 212, 191, 0.15);
-            --text: #f0f4fa;
-            --accent: #f97316;           /* sıcak turuncu vurgu */
-            --secondary-text: #b0c0d0;
-            --nav-bg: rgba(5, 7, 15, 0.8);
-            --shadow: 0 25px 50px -8px rgba(0,0,0,0.6);
+            --primary: #E0E0E0;         /* platin beyaz */
+            --primary-glow: 0 0 15px rgba(224, 224, 224, 0.5);
+            --bg: #0B0E1A;              /* koyu lacivert */
+            --bg-gradient: radial-gradient(circle at 30% 10%, #141c2c, #03050a);
+            --card-bg: rgba(18, 25, 40, 0.75);
+            --card-border: rgba(224, 224, 224, 0.15);
+            --text: #F0F4FA;
+            --accent: #FF3B3B;           /* neon kırmızısı */
+            --secondary-text: #B0C0D0;
+            --nav-bg: rgba(5, 8, 15, 0.9);
+            --shadow: 0 25px 50px -8px rgba(0,0,0,0.9);
         }
 
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -43,15 +40,16 @@
             scroll-behavior: smooth;
             overflow-x: hidden;
             position: relative;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* hafif doku (isteğe bağlı) */
+        /* Hafif doku - yıldız tozu efekti */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.05"><rect width="100" height="100" fill="none"/><path d="M10 10 L 90 10 L 90 90 L 10 90 Z" stroke="%232dd4bf" stroke-width="0.3" fill="none"/></svg>');
-            background-size: 60px 60px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" opacity="0.03"><circle cx="20" cy="30" r="1" fill="%23E0E0E0"/><circle cx="150" cy="70" r="1.5" fill="%23E0E0E0"/><circle cx="80" cy="150" r="1" fill="%23E0E0E0"/><circle cx="180" cy="180" r="2" fill="%23E0E0E0"/></svg>');
+            background-size: 200px 200px;
             pointer-events: none;
             z-index: -1;
         }
@@ -67,9 +65,7 @@
             z-index: 2;
         }
 
-        section { 
-            padding: 100px 0; 
-        }
+        section { padding: 100px 0; }
 
         h2 { 
             font-family: 'JetBrains Mono', monospace;
@@ -78,7 +74,7 @@
             display: flex;
             align-items: center;
             font-size: 1.8rem;
-            text-shadow: 0 0 15px rgba(45,212,191,0.5);
+            text-shadow: 0 0 8px rgba(224,224,224,0.3);
         }
 
         h2::after {
@@ -90,7 +86,7 @@
         }
 
         /* ---------------------------------------------
-            NAVIGATION (Gelişmiş Mobil Menü)
+            NAVIGATION
         --------------------------------------------- */
         nav {
             position: fixed;
@@ -98,7 +94,7 @@
             width: 100%;
             background: var(--nav-bg);
             backdrop-filter: blur(15px);
-            padding: 1rem 0;
+            padding: 0.8rem 0;
             z-index: 1000;
             border-bottom: 1px solid var(--card-border);
         }
@@ -115,21 +111,21 @@
         .logo-wrapper {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             text-decoration: none;
             transition: 0.3s;
         }
 
         .logo-icon {
-            background: rgba(45, 212, 191, 0.1);
+            background: rgba(224, 224, 224, 0.1);
             border: 1px solid var(--primary);
             color: var(--primary);
             font-family: 'JetBrains Mono', monospace;
             font-weight: bold;
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 8px;
-            font-size: 1.1rem;
-            box-shadow: 0 0 15px rgba(45,212,191,0.3);
+            font-size: 1rem;
+            box-shadow: 0 0 10px rgba(224,224,224,0.2);
         }
 
         .logo-text {
@@ -137,6 +133,7 @@
             font-weight: bold;
             color: var(--primary);
             letter-spacing: 1px;
+            font-size: 1.2rem;
         }
 
         .menu-toggle {
@@ -144,6 +141,10 @@
             font-size: 1.8rem;
             color: var(--primary);
             cursor: pointer;
+            background: transparent;
+            border: none;
+            outline: none;
+            padding: 5px;
         }
 
         .nav-links {
@@ -156,12 +157,10 @@
             text-decoration: none;
             font-weight: 500;
             transition: 0.3s;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
-        .nav-links a:hover { 
-            color: var(--primary); 
-        }
+        .nav-links a:hover { color: var(--primary); }
 
         @media (max-width: 768px) {
             .menu-toggle {
@@ -181,13 +180,20 @@
                 border-bottom: 1px solid var(--card-border);
                 transform: translateY(-150%);
                 opacity: 0;
-                transition: 0.4s ease;
+                transition: transform 0.4s ease, opacity 0.3s ease;
                 pointer-events: none;
+                box-shadow: 0 20px 30px rgba(0,0,0,0.5);
             }
             .nav-links.active {
                 transform: translateY(0);
                 opacity: 1;
                 pointer-events: all;
+            }
+            .nav-links a {
+                font-size: 1.2rem;
+                width: 100%;
+                text-align: center;
+                padding: 10px 0;
             }
         }
 
@@ -195,55 +201,50 @@
             HERO SECTION
         --------------------------------------------- */
         header {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(ellipse at 50% 50%, #1b2a3a 0%, #03050b 100%);
+            background: radial-gradient(ellipse at 50% 50%, #141e2e 0%, #03050a 100%);
             text-align: center;
-            padding: 20px;
+            padding: 100px 20px 60px;
             position: relative;
             overflow: hidden;
         }
 
-        header::after {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" opacity="0.1"><circle cx="30" cy="30" r="2" fill="%232dd4bf"/><circle cx="170" cy="80" r="3" fill="%232dd4bf"/><circle cx="120" cy="150" r="2" fill="%232dd4bf"/></svg>');
-            background-size: 200px 200px;
-            pointer-events: none;
-            z-index: 1;
-        }
-
         .hero-tag {
-            color: var(--primary); 
+            color: var(--accent); 
             font-family: 'JetBrains Mono'; 
             margin-bottom: 15px; 
             letter-spacing: 3px;
             font-size: 1rem;
-            text-shadow: 0 0 10px var(--primary);
+            text-shadow: 0 0 8px var(--accent);
+            background: rgba(0,0,0,0.2);
+            padding: 5px 15px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
         }
 
         h1 {
             font-family: 'JetBrains Mono', monospace;
-            font-size: clamp(2.2rem, 10vw, 4.5rem);
+            font-size: clamp(2rem, 10vw, 4rem);
             color: var(--primary);
-            margin: 15px 0;
+            margin: 10px 0;
             text-transform: uppercase;
             display: flex;
             align-items: center;
             gap: 10px;
-            filter: drop-shadow(0 0 25px rgba(45,212,191,0.6));
+            filter: drop-shadow(0 0 15px rgba(224,224,224,0.4));
+            word-break: break-word;
         }
 
         .hero-sub {
-            font-size: clamp(1rem, 4vw, 1.25rem);
+            font-size: clamp(0.95rem, 4vw, 1.2rem);
             color: var(--secondary-text);
             max-width: 650px;
             margin-bottom: 30px;
+            padding: 0 10px;
         }
 
         .btn-group {
@@ -253,27 +254,25 @@
             justify-content: center;
         }
 
-        /* ---------------------------------------------
-            BUTONLAR
-        --------------------------------------------- */
         .btn {
             display: inline-block;
             background: var(--primary);
-            color: #0b0e1a;
-            padding: 14px 28px;
-            border-radius: 8px;
+            color: #0B0E1A;
+            padding: 12px 24px;
+            border-radius: 40px;
             text-decoration: none;
             font-weight: 700;
             font-size: 0.95rem;
             transition: 0.3s;
             border: none;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(45,212,191,0.3);
+            box-shadow: 0 0 15px rgba(224,224,224,0.3);
+            border: 1px solid transparent;
         }
 
         .btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(45,212,191,0.7);
+            box-shadow: 0 0 25px rgba(224,224,224,0.7);
         }
 
         .btn-outline {
@@ -284,91 +283,25 @@
         }
 
         .btn-outline:hover {
-            background: rgba(45,212,191,0.1);
-            box-shadow: 0 0 20px rgba(45,212,191,0.4);
+            background: rgba(224,224,224,0.1);
         }
 
         /* ---------------------------------------------
-            YENİ BÖLÜM: KEŞİF ROTASI (İlgi Alanları)
-        --------------------------------------------- */
-        .explore-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
-        }
-
-        .explore-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 30px 20px;
-            text-align: center;
-            transition: 0.4s ease;
-            box-shadow: 0 15px 35px -10px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .explore-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            transform: translateX(-100%);
-            transition: 0.6s;
-        }
-
-        .explore-card:hover::before {
-            transform: translateX(100%);
-        }
-
-        .explore-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: var(--primary);
-            box-shadow: 0 25px 45px -8px rgba(45,212,191,0.3);
-        }
-
-        .explore-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 10px var(--primary));
-        }
-
-        .explore-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 12px;
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--text);
-        }
-
-        .explore-card p {
-            color: var(--secondary-text);
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        /* ---------------------------------------------
-            PROJE KARTLARI (güncellenmiş)
+            PROJE KARTLARI
         --------------------------------------------- */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
         }
 
         .card {
             background: var(--card-bg);
             backdrop-filter: blur(8px);
-            padding: 35px;
+            padding: 30px 25px;
             border-radius: 24px;
             border: 1px solid var(--card-border);
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.4s;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -376,24 +309,8 @@
             overflow: hidden;
         }
 
-        .card::before {
-            content: ""; 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            transform: translateX(-100%); 
-            transition: 0.5s;
-        }
-
-        .card:hover::before { 
-            transform: translateX(100%); 
-        }
-
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             border-color: var(--primary);
             box-shadow: var(--shadow);
         }
@@ -420,17 +337,15 @@
         .status.in-progress {
             color: #fbbf24;
         }
-        .status.in-progress::before {
-            background: #fbbf24;
-        }
+        .status.in-progress::before { background: #fbbf24; }
 
         /* ---------------------------------------------
-            İLETİŞİM FORMU (cam efekti)
+            İLETİŞİM FORMU
         --------------------------------------------- */
         .contact-form {
             background: var(--card-bg);
             backdrop-filter: blur(8px);
-            padding: 40px;
+            padding: 40px 30px;
             border-radius: 32px;
             border: 1px solid var(--card-border);
             max-width: 600px;
@@ -444,7 +359,7 @@
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: var(--secondary-text);
             font-size: 0.9rem;
         }
@@ -453,24 +368,20 @@
         .form-group textarea {
             width: 100%;
             padding: 14px;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.3);
             border: 1px solid var(--card-border);
-            border-radius: 12px;
+            border-radius: 16px;
             color: var(--text);
             font-family: 'Inter', sans-serif;
             transition: 0.3s;
+            font-size: 1rem;
         }
 
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(45,212,191,0.3);
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
+            box-shadow: 0 0 15px rgba(224,224,224,0.3);
         }
 
         /* ---------------------------------------------
@@ -478,11 +389,10 @@
         --------------------------------------------- */
         footer { 
             text-align: center; 
-            padding: 60px 20px; 
+            padding: 50px 20px; 
             color: var(--secondary-text);
             border-top: 1px solid var(--card-border);
-            font-size: 0.9rem;
-            background: rgba(5,7,15,0.3);
+            background: rgba(5,8,15,0.3);
             backdrop-filter: blur(4px);
         }
 
@@ -491,6 +401,7 @@
             justify-content: center;
             gap: 25px;
             margin: 20px 0;
+            flex-wrap: wrap;
         }
 
         .social-links a {
@@ -509,47 +420,45 @@
             ANİMASYONLAR
         --------------------------------------------- */
         .fade-in {
-            animation: fadeIn 1s ease-in;
+            animation: fadeIn 0.8s ease-out;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        @media (max-width: 480px) {
+            h2 { font-size: 1.5rem; }
+            .card { padding: 25px 20px; }
+            .btn { padding: 10px 20px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- NAVIGATION (Hamburger menü dahil) -->
+    <!-- NAVIGATION -->
     <nav>
         <div class="nav-content">
             <a href="#" class="logo-wrapper">
                 <div class="logo-icon">&lt;/&gt;</div>
-                <div class="logo-text">ASTRAFORGE</div>
+                <div class="logo-text">NOVACORE ZENITH LABS</div>
             </a>
-            <div class="menu-toggle" id="mobile-menu">
+            <button class="menu-toggle" id="mobile-menu" aria-label="Menü">
                 <i class="fas fa-bars"></i>
-            </div>
+            </button>
             <div class="nav-links" id="nav-links">
                 <a href="#about">Hakkımda</a>
-                <a href="#explore">Keşif Rotam</a>  <!-- değişti -->
                 <a href="#projects">Projeler</a>
                 <a href="#contact">İletişim</a>
             </div>
         </div>
     </nav>
 
-    <!-- HERO BÖLÜMÜ -->
+    <!-- HERO -->
     <header>
-        <div class="hero-tag">⋆｡°✩  YENİ NESİL KURGU  ✩°｡⋆</div>
-        
-        <h1>
-            <span style="opacity: 0.3;">&lt;</span>
-            ASTRAFORGE
-            <span style="opacity: 0.3;">/&gt;</span>
-        </h1>
-
-        <p class="hero-sub">Lise öğrencisi & Full-Stack geliştirici adayı. JavaScript ekosistemiyle interaktif dijital dünyalar inşa ediyorum. Sıra dışı çözümler, sıra dışı tasarımlar.</p>
-        
+        <div class="hero-tag">✧ NOVACORE ZENITH LABS ✧</div>
+        <h1><span style="opacity: 0.3;">&lt;</span> NOVACORE <span style="opacity: 0.3;">/&gt;</span></h1>
+        <p class="hero-sub">Lise öğrencisi & Full-Stack geliştirici. JavaScript ekosistemiyle interaktif dijital dünyalar inşa ediyorum. Sıra dışı çözümler, sıra dışı tasarımlar.</p>
         <div class="btn-group">
             <a href="#projects" class="btn">Projeleri Keşfet</a>
             <a href="#contact" class="btn btn-outline">Birlikte Çalışalım</a>
@@ -557,7 +466,6 @@
     </header>
 
     <div class="container">
-        
         <!-- HAKKIMDA -->
         <section id="about" class="fade-in">
             <h2>Hakkımda</h2>
@@ -565,45 +473,8 @@
                 Ben, kodun bir araçtan ziyade bir sanat formu olduğuna inanan bir geliştiriciyim. 
                 Lise yıllarımdan beri <strong>JavaScript</strong> dünyasının içindeyim. 
                 Sadece çalışan değil, aynı zamanda estetik, hızlı ve güvenli uygulamalar geliştirmeye odaklanıyorum. 
-                AstraForge benim dijital atölyem; burada sıradan fikirleri olağanüstü deneyimlere dönüştürüyorum.
+                NovaCore Zenith Labs benim dijital atölyem; burada sıradan fikirleri olağanüstü deneyimlere dönüştürüyorum.
             </p>
-        </section>
-
-        <!-- ESKİ TEKNİK STACK KALDIRILDI, YERİNE KEŞİF ROTASI -->
-        <section id="explore" class="fade-in">
-            <h2>✨ Keşif Rotam</h2>
-            <div class="explore-grid">
-                <div class="explore-card">
-                    <div class="explore-icon"><i class="fas fa-brain"></i></div>
-                    <h3>Yapay Zeka</h3>
-                    <p>TensorFlow.js ile tarayıcıda makine öğrenmesi modelleri oluşturuyorum. Geleceğin kodunu yazıyorum.</p>
-                </div>
-                <div class="explore-card">
-                    <div class="explore-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3>Siber Güvenlik</h3>
-                    <p>OWASP prensipleri, güvenli kodlama ve temel penetrasyon testleri üzerine çalışıyorum.</p>
-                </div>
-                <div class="explore-card">
-                    <div class="explore-icon"><i class="fas fa-gamepad"></i></div>
-                    <h3>Oyun Geliştirme</h3>
-                    <p>Phaser ve Canvas ile tarayıcı oyunları. Yaratıcı mekanikler ve hikayeler tasarlıyorum.</p>
-                </div>
-                <div class="explore-card">
-                    <div class="explore-icon"><i class="fas fa-paint-brush"></i></div>
-                    <h3>UI Animasyonları</h3>
-                    <p>GSAP ve Framer Motion ile akıcı, etkileyici arayüz animasyonları geliştiriyorum.</p>
-                </div>
-                <div class="explore-card">
-                    <div class="explore-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-                    <h3>Serverless Mimariler</h3>
-                    <p>Vercel, Netlify ve Cloud Functions ile ölçeklenebilir projeler oluşturuyorum.</p>
-                </div>
-                <div class="explore-card">
-                    <div class="explore-icon"><i class="fas fa-cube"></i></div>
-                    <h3>3D Web</h3>
-                    <p>Three.js ile tarayıcıda üç boyutlu deneyimler ve interaktif sahneler kuruyorum.</p>
-                </div>
-            </div>
         </section>
 
         <!-- PROJELER -->
@@ -613,7 +484,7 @@
                 <div class="card">
                     <div>
                         <span class="status">Canlı</span>
-                        <h3 style="margin-bottom: 10px; font-size: 1.4rem;">🔍 Dedektiflik Oyunu V2</h3>
+                        <h3 style="margin-bottom: 10px;">🔍 Dedektiflik Oyunu V2</h3>
                         <p style="color: var(--secondary-text); margin-bottom: 20px;">Mantık hatalarını bulmaya dayalı, derin hikayeli bir tarayıcı deneyimi. 5+ farklı senaryo.</p>
                     </div>
                     <a href="#" class="btn" onclick="alert('Demo versiyonu yayında! (Gerçek link eklenecek)')">Projeyi İncele</a>
@@ -622,7 +493,7 @@
                 <div class="card">
                     <div>
                         <span class="status in-progress">Geliştiriliyor</span>
-                        <h3 style="margin-bottom: 10px; font-size: 1.4rem;">💻 Cyber-Sleuth Sim</h3>
+                        <h3 style="margin-bottom: 10px;">💻 Cyber-Sleuth Sim</h3>
                         <p style="color: var(--secondary-text); margin-bottom: 20px;">Terminal arayüzlü siber güvenlik simülasyonu. Gerçek zamanlı veri akışı ve şifre kırma görevleri.</p>
                     </div>
                     <button class="btn btn-outline" style="opacity: 0.7; cursor: not-allowed;">Yapım Aşamasında</button>
@@ -631,7 +502,7 @@
                 <div class="card">
                     <div>
                         <span class="status">Beta</span>
-                        <h3 style="margin-bottom: 10px; font-size: 1.4rem;">📱 Anlık Hava Durumu</h3>
+                        <h3 style="margin-bottom: 10px;">📱 Anlık Hava Durumu</h3>
                         <p style="color: var(--secondary-text); margin-bottom: 20px;">Açık kaynak API kullanarak geliştirilmiş, minimalist ve hızlı hava durumu uygulaması. Konum tabanlı.</p>
                     </div>
                     <a href="#" class="btn" onclick="alert('Beta sürümü hazır!')">Önizle</a>
@@ -639,7 +510,7 @@
             </div>
         </section>
 
-        <!-- İLETİŞİM FORMU -->
+        <!-- İLETİŞİM -->
         <section id="contact" class="fade-in">
             <h2 style="justify-content: center;">Yeni Bir Görev Başlat?</h2>
             <div class="contact-form">
@@ -658,10 +529,9 @@
                     </div>
                     <button type="submit" class="btn" style="width: 100%;">Gönder</button>
                 </form>
-                <p style="margin-top: 20px; color: var(--secondary-text);">Ya da doğrudan yaz: <a href="mailto:hello@astraforge.dev" style="color: var(--primary);">hello@astraforge.dev</a></p>
+                <p style="margin-top: 20px; color: var(--secondary-text);">Ya da doğrudan yaz: <a href="mailto:hello@novacore.zenith" style="color: var(--primary);">hello@novacore.zenith</a></p>
             </div>
         </section>
-
     </div>
 
     <!-- FOOTER -->
@@ -672,93 +542,117 @@
             <a href="#" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
             <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         </div>
-        <p>Built with <strong>&lt;/&gt;</strong> by AstraForge</p>
-        <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.5;">&copy; 2026 Tüm Hakları Saklıdır. AstraForge benzersizdir.</p>
+        <p>Built with <strong>&lt;/&gt;</strong> by NovaCore Zenith Labs</p>
+        <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.7;">&copy; 2026 Tüm Hakları Saklıdır. NovaCore Zenith Labs benzersizdir.</p>
     </footer>
 
-    <!-- GÜVENLİK: Sağ tık, F12, geliştirici kısayollarını engelle -->
+    <!-- GÜVENLİK: Tüm inceleme yöntemlerini kapat -->
     <script>
         (function() {
+            // Sağ tık menüsünü engelle
             document.addEventListener('contextmenu', function(e) {
                 e.preventDefault();
                 return false;
             });
 
+            // Tüm geliştirici kısayollarını engelle
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'F12' || 
-                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
-                    (e.ctrlKey && e.key === 'U') ||
-                    (e.metaKey && e.altKey && e.key === 'I')) {
+                // F12
+                if (e.key === 'F12') {
+                    e.preventDefault();
+                    return false;
+                }
+                // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+                if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+                    e.preventDefault();
+                    return false;
+                }
+                // Ctrl+U (kaynak görüntüle)
+                if (e.ctrlKey && e.key === 'u') {
+                    e.preventDefault();
+                    return false;
+                }
+                // Ctrl+S (kaydet)
+                if (e.ctrlKey && e.key === 's') {
+                    e.preventDefault();
+                    return false;
+                }
+                // Mac: Cmd+Option+I
+                if (e.metaKey && e.altKey && e.key === 'I') {
+                    e.preventDefault();
+                    return false;
+                }
+                // Cmd+U (Mac)
+                if (e.metaKey && e.key === 'u') {
                     e.preventDefault();
                     return false;
                 }
             });
-            console.log("%cGeliştirici araçları bu sitede kısıtlanmıştır.", "color: #2dd4bf; font-size: 16px; font-weight: bold;");
+
+            console.log("%cGeliştirici araçları bu sitede kısıtlanmıştır.", "color: #FF3B3B; font-size: 16px; font-weight: bold;");
         })();
     </script>
 
     <!-- Mobil menü ve diğer scriptler -->
     <script>
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navLinks = document.getElementById('nav-links');
+        (function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.getElementById('nav-links');
+            if (!mobileMenu || !navLinks) return;
 
-        if (mobileMenu) {
-            mobileMenu.addEventListener('click', () => {
+            mobileMenu.addEventListener('click', (e) => {
+                e.stopPropagation();
                 navLinks.classList.toggle('active');
                 const icon = mobileMenu.querySelector('i');
-                if (icon.classList.contains('fa-bars')) {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-times');
-                } else {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            });
-        }
-
-        document.addEventListener('click', (e) => {
-            if (!mobileMenu?.contains(e.target) && !navLinks?.contains(e.target)) {
-                navLinks?.classList.remove('active');
-                const icon = mobileMenu?.querySelector('i');
                 if (icon) {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            }
-        });
-
-        const links = document.querySelectorAll('.nav-links a');
-        links.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-                navLinks?.classList.remove('active');
-                const icon = mobileMenu?.querySelector('i');
-                if (icon) {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
+                    icon.classList.toggle('fa-bars');
+                    icon.classList.toggle('fa-times');
                 }
             });
-        });
 
-        // Proje butonları demo uyarısı
-        const projectButtons = document.querySelectorAll('.card .btn');
-        projectButtons.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                if (this.classList.contains('btn-outline') && this.style.cursor === 'not-allowed') {
-                    e.preventDefault();
-                    return;
-                }
-                if (!this.getAttribute('href') || this.getAttribute('href') === '#') {
-                    e.preventDefault();
-                    alert('Bu proje henüz yayına alınmadı. Gerçek içerik yakında eklenecek.');
+            document.addEventListener('click', (e) => {
+                if (!navLinks.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                    const icon = mobileMenu.querySelector('i');
+                    if (icon) {
+                        icon.classList.add('fa-bars');
+                        icon.classList.remove('fa-times');
+                    }
                 }
             });
-        });
+
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    navLinks.classList.remove('active');
+                    const icon = mobileMenu.querySelector('i');
+                    if (icon) {
+                        icon.classList.add('fa-bars');
+                        icon.classList.remove('fa-times');
+                    }
+                });
+            });
+
+            // Proje butonları demo uyarısı
+            document.querySelectorAll('.card .btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    if (this.classList.contains('btn-outline') && this.style.cursor === 'not-allowed') {
+                        e.preventDefault();
+                        return;
+                    }
+                    if (!this.getAttribute('href') || this.getAttribute('href') === '#') {
+                        e.preventDefault();
+                        alert('Bu proje henüz yayına alınmadı. Gerçek içerik yakında eklenecek.');
+                    }
+                });
+            });
+        })();
     </script>
 </body>
 </html>
